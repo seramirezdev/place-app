@@ -27,6 +27,8 @@ dependencies:
   get_it: ^3.0.1
   json_serializable: ^3.2.2
   location: ^2.3.5
+  shared_preferences: ^0.5.3+4
+  http: ^0.12.0+2
 
 dev_dependencies:
   pedantic: ^1.4.0
