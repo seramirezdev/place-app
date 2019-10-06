@@ -2,11 +2,11 @@ import 'package:places/src/core/services/local_storage_service.dart';
 import 'package:places/src/locator.dart';
 
 class HeadersAPI {
-  static Map<String, String> headers(bool isPrivate) {
+  static Map<String, String> headers({bool needJwtToken}) {
     var headers = Map<String, String>();
     headers["Content-Type"] = "application/json";
 
-    if (isPrivate) {
+    if (needJwtToken) {
       headers["Authorization"] =
           "Bearer ${locator<LocalStorageService>().jwtToken}";
     }

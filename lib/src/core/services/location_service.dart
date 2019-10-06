@@ -5,7 +5,7 @@ import 'package:places/src/core/entities/user_location.dart';
 
 class LocationService {
   LocationService() {
-    requestPermission();
+    _requestPermission();
   }
 
   final _location = Location();
@@ -13,12 +13,12 @@ class LocationService {
   StreamController<UserLocation> _locationController =
       StreamController<UserLocation>.broadcast();
 
-  Stream<UserLocation> get locatoinStram => _locationController.stream;
+  Stream<UserLocation> get userLocation => _locationController.stream;
 
-  void requestPermission() {
+  void _requestPermission() {
     _location.requestPermission().then((granted) {
       if (granted) {
-        startLocationListener();
+        _startLocationListener();
       } else {
         throw Exception(
             "No se obtuvieron los permisos para acceder a al localización");
@@ -26,11 +26,11 @@ class LocationService {
     });
   }
 
-  void startLocationListener() {
-    _location.onLocationChanged().listen(updateLocation);
+  void _startLocationListener() {
+    _location.onLocationChanged().listen(_updateLocation);
   }
 
-  void updateLocation(LocationData locationData) {
+  void _updateLocation(LocationData locationData) {
     if (locationData != null) {
       _locationController.add(UserLocation(
         latitude: locationData.latitude,

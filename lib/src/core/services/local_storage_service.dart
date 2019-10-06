@@ -1,25 +1,28 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageService {
-  LocalStorageService() {
-    if (_sharedPreferences == null) {
-      initSharedPreferences();
-    }
-  }
+  static LocalStorageService _instance;
+  static SharedPreferences _preferences;
 
-  SharedPreferences _sharedPreferences;
   final String _kJWTToken = "jwtToken";
   final String _kIsLogged = "isLogged";
 
-  void initSharedPreferences() async =>
-      _sharedPreferences = await SharedPreferences.getInstance();
+  static Future<LocalStorageService> getInstance() async {
+    if (_instance == null) {
+      _instance = LocalStorageService();
+    }
+    if (_preferences == null) {
+      _preferences = await SharedPreferences.getInstance();
+    }
+    return _instance;
+  }
 
   set jwtToken(String jwtToken) =>
-      _sharedPreferences.setString(_kJWTToken, jwtToken);
+      _preferences.setString(_kJWTToken, jwtToken);
 
-  String get jwtToken => _sharedPreferences.getString(_kJWTToken);
+  String get jwtToken => _preferences.getString(_kJWTToken);
 
-  set setLogged(bool logged) => _sharedPreferences.setBool(_kIsLogged, logged);
+  set setLogged(bool logged) => _preferences.setBool(_kIsLogged, logged);
 
-  bool get isLogged => _sharedPreferences.getBool(_kIsLogged);
+  bool get isLogged => _preferences?.getBool(_kIsLogged) ?? false;
 }
