@@ -3,24 +3,22 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'package:places/src/core/constants/endpoints.dart';
-import 'package:places/src/core/entities/user.dart';
+import 'package:places/src/core/entities/place.dart';
 import 'package:places/src/core/utils/headers_api.dart';
 
-const endpointLogin = "$urlService/login";
+const endpointLogin = "$urlService/places";
 
-class UserAuthApi {
-  Future<String> signInWithCredential(User credentials) async {
-    String jwt;
-
+class PlaceApi {
+  Future<List<Place>> getPlaces() async {
+    List<Place> places = List();
     try {
-      final response = await http.post(endpointLogin,
-          body: json.encode(credentials.toJson()),
-          headers: HeadersAPI.headers(needJwtToken: false));
-
-      final resBody = response.body;
+      final response = await http.get(endpointLogin,
+          headers: HeadersAPI.headers(needJwtToken: true));
 
       if (response.statusCode == 200) {
-        jwt = json.decode(resBody)["jwtKey"];
+        final resBody = json.decode(response.body);
+
+        resBody.forEach((item) => places.add(Place.fromJson(item)));
       } else if (response.statusCode == 404) {
         return Future.error("Credenciales inválidas");
       } else if (response.statusCode == 500) {
@@ -30,6 +28,6 @@ class UserAuthApi {
       return Future.error("Revisa tu conexión a internet");
     }
 
-    return jwt;
+    return places;
   }
 }

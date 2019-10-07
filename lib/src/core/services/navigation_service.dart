@@ -5,9 +5,12 @@ class NavigationService {
 
   void navigateTo(String routeName, {bool pop = false, dynamic arguments}) {
     if (pop) {
-      if (navigatorKey.currentState.canPop()) navigatorKey.currentState.pop();
+      navigatorKey.currentState
+          .pushReplacementNamed(routeName, arguments: arguments);
+    } else {
+      navigatorKey.currentState
+          .pushNamed(routeName, arguments: arguments);
     }
-    navigatorKey.currentState.pushReplacementNamed(routeName, arguments: arguments);
   }
 
   void goBack() {

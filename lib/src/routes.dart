@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:places/src/public/pages/home/home_page.dart';
 import 'package:places/src/public/pages/login/login_page.dart';
 import 'package:places/src/public/pages/main_page.dart';
+import 'package:places/src/public/pages/maps/maps_page.dart';
 
 class Routes {
   static const home = "home";
@@ -17,6 +18,8 @@ class Routes {
         return MaterialPageRoute(builder: (context) => LoginPage());
       case main:
         return MaterialPageRoute(builder: (context) => MainPage());
+      case maps:
+        return MaterialPageRoute(builder: (context) => MapsPage());
       default:
         return MaterialPageRoute(
           builder: (context) => Scaffold(

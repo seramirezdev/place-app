@@ -24,5 +24,8 @@ class UserRepository {
     return isLogged;
   }
 
-  Future logout() async => _localStorageService.setLogged = false;
+  Future logout() async {
+    _localStorageService.setLogged = false;
+    _localStorageService.jwtToken = "";
+  }
 }

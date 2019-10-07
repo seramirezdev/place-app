@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:places/src/core/entities/image.dart';
 
 part 'place.g.dart';
 
@@ -11,7 +12,8 @@ class Place {
       this.rating,
       this.location,
       this.latitude,
-      this.longitude});
+      this.longitude,
+      this.images});
 
   factory Place.fromJson(Map<String, dynamic> json) => _$PlaceFromJson(json);
 
@@ -22,6 +24,7 @@ class Place {
   String location;
   double latitude;
   double longitude;
+  List<Image> images;
 
   Map<String, dynamic> toJson() => _$PlaceToJson(this);
 }

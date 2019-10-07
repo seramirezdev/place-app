@@ -8,7 +8,6 @@ import 'package:places/src/locator.dart';
 import 'package:places/src/routes.dart';
 
 class AuthProvider extends BaseProvider {
-  String error = "";
   final _userRepository = locator<UserRepository>();
 
   Future loginUser(User credentials) async {

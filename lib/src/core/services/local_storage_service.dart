@@ -11,14 +11,15 @@ class LocalStorageService {
     if (_instance == null) {
       _instance = LocalStorageService();
     }
+
     if (_preferences == null) {
       _preferences = await SharedPreferences.getInstance();
     }
+
     return _instance;
   }
 
-  set jwtToken(String jwtToken) =>
-      _preferences.setString(_kJWTToken, jwtToken);
+  set jwtToken(String jwtToken) => _preferences.setString(_kJWTToken, jwtToken);
 
   String get jwtToken => _preferences.getString(_kJWTToken);
 

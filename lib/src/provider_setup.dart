@@ -1,14 +1,13 @@
-import 'package:places/src/locator.dart';
+import 'package:places/src/core/providers/place_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'package:places/src/core/providers/auth_provider.dart';
 
 List<SingleChildCloneableWidget> providers = [
-  ...independentServices,
-];
-
-List<SingleChildCloneableWidget> independentServices = [
   ChangeNotifierProvider(
-    builder: (_) => locator<AuthProvider>(),
+    builder: (_) => AuthProvider(),
+  ),
+  ChangeNotifierProvider(
+    builder: (_) => PlaceProvider(),
   ),
 ];
