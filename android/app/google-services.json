@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "601465980185",
+    "firebase_url": "https://places-push.firebaseio.com",
+    "project_id": "places-push",
+    "storage_bucket": "places-push.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601465980185:android:2aa4d532dc59a710eeb188",
+        "android_client_info": {
+          "package_name": "com.example.places"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "601465980185-881atcme9g33llpko48d35ghl3keqcv7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.places",
+            "certificate_hash": "7a719dc220f8bdfa0154b8dd698b83f3a7ea843b"
+          }
+        },
+        {
+          "client_id": "601465980185-l4lg28uigkc1uanc9fa22ejj1bni6r0s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnwwyjd15aHUMSSUlnw66BDFzH5KcTzHg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "601465980185-l4lg28uigkc1uanc9fa22ejj1bni6r0s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

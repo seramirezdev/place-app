@@ -5,6 +5,7 @@ class LocalStorageService {
   static SharedPreferences _preferences;
 
   final String _kJWTToken = "jwtToken";
+  final String _kFCMToken = "fcmToken";
   final String _kIsLogged = "isLogged";
 
   static Future<LocalStorageService> getInstance() async {
@@ -22,6 +23,10 @@ class LocalStorageService {
   set jwtToken(String jwtToken) => _preferences.setString(_kJWTToken, jwtToken);
 
   String get jwtToken => _preferences.getString(_kJWTToken);
+
+  set fcmToken(String fcmToken) => _preferences.setString(_kFCMToken, fcmToken);
+
+  String get fcmToken => _preferences.getString(_kFCMToken);
 
   set setLogged(bool logged) => _preferences.setBool(_kIsLogged, logged);
 

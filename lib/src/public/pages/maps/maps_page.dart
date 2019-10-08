@@ -6,6 +6,7 @@ import 'package:places/src/core/providers/place_provider.dart';
 import 'package:places/src/core/services/location_service.dart';
 import 'package:places/src/locator.dart';
 import 'package:places/src/public/pages/maps/widget/bottom_place_detail.dart';
+import 'package:places/src/public/pages/widgets/loading.dart';
 import 'package:provider/provider.dart';
 
 class MapsPage extends StatefulWidget {
@@ -19,6 +20,18 @@ class _MapsPageState extends State<MapsPage> {
   double _bottomSize = 50;
   double _screenHeight;
   final double _defulatBottomSize = 50;
+
+  @override
+  void initState() {
+    locator<LocationService>().initLocationListener();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    locator<LocationService>().dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +59,7 @@ class _MapsPageState extends State<MapsPage> {
       stream: locator<LocationService>().userLocation,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return _loading();
+          return Loading(message: "Obteniendo localizaión");
         }
 
         final data = snapshot.data;
@@ -55,9 +68,7 @@ class _MapsPageState extends State<MapsPage> {
         return GoogleMap(
           myLocationButtonEnabled: true,
           mapType: MapType.normal,
-          onTap: (_) {
-            _onTapMap();
-          },
+          onTap: _onTapMap,
           onMapCreated: (onMapCreated) {
             _onMapCreated(onMapCreated, userPosition);
           },
@@ -79,15 +90,11 @@ class _MapsPageState extends State<MapsPage> {
               icon: BitmapDescriptor.defaultMarkerWithHue(hue),
               position: LatLng(place.latitude, place.longitude),
               onTap: () => _onTapMarker(place),
-              infoWindow: InfoWindow(
-                title: place.title,
-                snippet: place.description,
-              ),
             ))
         .toSet();
   }
 
-  void _onTapMap() {
+  void _onTapMap(_) {
     setState(() {
       if (_placeDetail == null) {
         _bottomSize = _defulatBottomSize;
@@ -126,18 +133,5 @@ class _MapsPageState extends State<MapsPage> {
   void _onMapCreated(GoogleMapController mapController, LatLng userPosition) {
     mapController.animateCamera(CameraUpdate.newCameraPosition(
         CameraPosition(target: userPosition, zoom: 12)));
-  }
-
-  Widget _loading() {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text("Obteniendo ubicación..."),
-          SizedBox(height: 20.0),
-          CircularProgressIndicator(),
-        ],
-      ),
-    );
   }
 }

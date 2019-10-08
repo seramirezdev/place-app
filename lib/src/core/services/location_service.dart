@@ -4,15 +4,15 @@ import 'package:location/location.dart';
 import 'package:places/src/core/entities/user_location.dart';
 
 class LocationService {
-  LocationService() {
+
+  void initLocationListener() {
+    _locationController = StreamController<UserLocation>.broadcast();
     _requestPermission();
   }
 
   final _location = Location();
 
-  StreamController<UserLocation> _locationController =
-      StreamController<UserLocation>.broadcast();
-
+  StreamController<UserLocation> _locationController;
   Stream<UserLocation> get userLocation => _locationController.stream;
 
   void _requestPermission() {
@@ -31,11 +31,15 @@ class LocationService {
   }
 
   void _updateLocation(LocationData locationData) {
-    if (locationData != null) {
+    if (!_locationController.isClosed) {
       _locationController.add(UserLocation(
         latitude: locationData.latitude,
         longitude: locationData.longitude,
       ));
     }
+  }
+
+  void dispose() {
+    _locationController.close();
   }
 }

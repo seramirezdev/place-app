@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:places/src/core/providers/place_provider.dart';
 import 'package:places/src/core/repositories/place_repository.dart';
 import 'package:places/src/core/repositories/user_repository.dart';
 import 'package:places/src/core/services/local_storage_service.dart';
@@ -16,4 +17,6 @@ void setupLocator() async {
 
   locator.registerLazySingleton(() => UserRepository());
   locator.registerLazySingleton(() => PlaceRepository());
+  
+  locator.registerLazySingleton(() => PlaceProvider());
 }

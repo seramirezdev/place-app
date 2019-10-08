@@ -68,7 +68,7 @@ class _BottomPlaceDetailState extends State<BottomPlaceDetail> {
         _separator(),
         Expanded(
           child: SingleChildScrollView(
-              child: PlaceDetailtPage(place: widget.place)),
+              child: PlaceDetailtPage(place: widget.place, isPage: false)),
         ),
       ],
     );

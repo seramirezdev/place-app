@@ -4,10 +4,6 @@ import 'package:places/src/core/repositories/place_repository.dart';
 import 'package:places/src/locator.dart';
 
 class PlaceProvider extends BaseProvider {
-  PlaceProvider() {
-    getPlaces();
-  }
-
   final _placeRepository = locator<PlaceRepository>();
 
   List<Place> places = List();
@@ -18,6 +14,7 @@ class PlaceProvider extends BaseProvider {
       places = await _placeRepository.getPlaces();
     } catch (error) {
       this.error = error;
+      print(error);
     }
 
     state = ViewState.idle;

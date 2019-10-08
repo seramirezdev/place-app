@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:places/src/core/constants/endpoints.dart';
 import 'package:places/src/core/entities/place.dart';
-import 'package:places/src/core/utils/headers_api.dart';
+import 'package:places/src/core/services/navigation_service.dart';
+import 'package:places/src/locator.dart';
 import 'package:places/src/public/pages/home/styles/text.dart';
 import 'package:places/src/public/pages/styles/colors_app.dart';
+import 'package:places/src/public/pages/widgets/place_carousel.dart';
+import 'package:places/src/routes.dart';
 
 class PlaceListItem extends StatelessWidget {
   PlaceListItem({place}) : _place = place;
@@ -14,54 +16,21 @@ class PlaceListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 200,
-      child: Card(
-        elevation: 8.0,
-        margin: EdgeInsets.only(bottom: 10.0),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-        clipBehavior: Clip.antiAlias,
-        child: Stack(
-          children: <Widget>[
-            _getImages(),
-            _getOpacity(),
-            _getDescription(),
-          ],
+      child: InkWell(
+        onTap: _onClickOpenDetailImage,
+        child: Card(
+          elevation: 4.0,
+          margin: EdgeInsets.only(bottom: 10.0),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+          clipBehavior: Clip.antiAlias,
+          child: Stack(
+            children: <Widget>[
+              PlaceCarousel(images: _place.images),
+              _getDescription(),
+            ],
+          ),
         ),
       ),
-    );
-  }
-
-  Widget _getImages() {
-    final urlImage = "$endpointImages/${_place.images[2].path}";
-
-    return Image(
-      image: NetworkImage(
-        urlImage,
-        headers: HeadersAPI.headers(needJwtToken: true),
-      ),
-      fit: BoxFit.cover,
-      width: double.infinity,
-      loadingBuilder: (context, widget, loadingProgress) {
-        if (loadingProgress == null) return widget;
-
-        return Center(
-          child: CircularProgressIndicator(
-            value: loadingProgress.expectedTotalBytes != null
-                ? loadingProgress.cumulativeBytesLoaded /
-                    loadingProgress.expectedTotalBytes
-                : null,
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _getOpacity() {
-    return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-        Colors.black.withOpacity(0.2),
-        Colors.black.withOpacity(0.7),
-      ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
     );
   }
 
@@ -92,5 +61,9 @@ class PlaceListItem extends StatelessWidget {
         Text(_place.rating.toString(), style: textItemRatingPlace),
       ],
     );
+  }
+
+  void _onClickOpenDetailImage() {
+    locator<NavigationService>().navigateTo(Routes.detail, arguments: _place);
   }
 }
